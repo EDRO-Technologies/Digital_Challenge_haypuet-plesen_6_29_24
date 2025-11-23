@@ -128,6 +128,3 @@ class EventLogRead(EventLogBase):
 class EventLogUpdate(SQLModel):
     old_event: int | None = None
     new_event: int | None = None
-
-class ScheduleFromExcel(SQLModel):
-    ...

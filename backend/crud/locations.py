@@ -12,10 +12,12 @@ def create_location(session: Session, data: LocationCreate) -> Location:
 def get_location(session: Session, obj_id: int) -> Location | None:
     return session.get(Location, obj_id)
 
-def list_locations(session: Session, address_q=None, limit=50, offset=0):
+def list_locations(session: Session, address_q=None, room_q=None, limit=50, offset=0):
     stmt = select(Location)
     if address_q:
         stmt = stmt.where(Location.address.ilike(f"%{address_q}%"))
+    if room_q:
+        stmt = stmt.where(Location.room.ilike(f"%{room_q}%"))
     stmt = stmt.limit(limit).offset(offset)
     return session.exec(stmt).all()
 

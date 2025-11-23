@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi import FastAPI
 from .db import create_db_and_tables
-from .routers import users, groups, user_groups, locations, events, event_groups, event_logs
+from .routers import users, groups, user_groups, locations, events, event_groups, event_logs, schedule
 
 # from apiclient import apiclient
 
@@ -39,3 +39,4 @@ app.include_router(locations.router)
 app.include_router(events.router)
 app.include_router(event_groups.router)
 app.include_router(event_logs.router)
+app.include_router(schedule.router)
