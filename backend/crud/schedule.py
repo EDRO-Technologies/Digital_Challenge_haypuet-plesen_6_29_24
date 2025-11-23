@@ -84,7 +84,7 @@ def create_schedule_from_excel_file(session: Session, file: BinaryIO) -> list[Ev
             "periodicity": event.get("periodicity"),
             "time": ts_base,
             "duration": 80,
-            "created_by": teacher.id if teacher else None,
+            "created_by": teacher.id if teacher else 55,
             "location": location.id if location else None,
             "teacher": teacher.id if teacher else None,
         }))
