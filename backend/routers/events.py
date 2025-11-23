@@ -40,3 +40,7 @@ def delete_event(event_id: int, session: SessionDep):
     obj = get_object_or_404(session, Event, event_id)
     crud.delete_event(session, obj)
     return None
+
+@router.get("/by_group_id/{group_id}", response_model=list[EventRead])
+def list_events_by_group_id(group_id: int, session: SessionDep):
+    return crud.get_by_group_id(session, group_id)

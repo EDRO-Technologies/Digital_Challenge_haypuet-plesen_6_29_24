@@ -68,9 +68,9 @@ def create_schedule_from_excel_file(session: Session, file: BinaryIO) -> list[Ev
         tz = ZoneInfo("Asia/Yekaterinburg")
         base = datetime.combine(date.today(), time(8, 30), tzinfo=tz)
 
-        num = event.get("num")
+        num = event.get("event_num")
         if num is not None:
-            for t in range(int(event.get("num"))-1):
+            for t in range(int(num)-1):
                 base = base + timedelta(hours=1, minutes=20)
 
             ts_base = int(base.timestamp())
@@ -80,7 +80,7 @@ def create_schedule_from_excel_file(session: Session, file: BinaryIO) -> list[Ev
         event = events.create_event(session=session, data=EventCreate.model_validate({
             "name": event.get("event_name"),
             "week_day": event.get("week_day"),
-            "num": event.get("num"),
+            "num": num,
             "periodicity": event.get("periodicity"),
             "time": ts_base,
             "duration": 80,

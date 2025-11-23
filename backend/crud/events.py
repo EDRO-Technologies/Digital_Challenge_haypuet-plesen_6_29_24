@@ -1,8 +1,9 @@
 import datetime
 from sqlmodel import Session, select
 from fastapi import HTTPException
-from ..entity import Event, Location, EventsPeriodicity
+from ..entity import Event, Location, EventsPeriodicity, EventGroup
 from ..schemas import EventCreate, EventUpdate, EventRead
+from ..crud import event_groups
 # from users import User
 
 
@@ -15,6 +16,12 @@ def create_event(session: Session, data: EventCreate) -> Event:
 
 def get_event(session: Session, obj_id: int) -> Event | None:
     return session.get(Event, obj_id)
+
+def get_by_group_id(session: Session, group_id: int):
+    event_groups_from_db = event_groups.list_event_groups(session=session, group_id=group_id)
+    event_ids = [event_group.event_id for event_group in event_groups_from_db]
+    stmt = select(Event).where(Event.id.in_(event_ids))
+    return session.exec(stmt).all()
 
 def list_events(
     session: Session,
